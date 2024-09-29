@@ -7,6 +7,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import pojo.Request;
 
 
 @TestMethodOrder (MethodOrderer.OrderAnnotation.class)
@@ -14,38 +15,37 @@ public class MyTest2 {
 
     private static final String baseUrl = "https://petstore.swagger.io/v2";
 
-    final String body = "[{\n" +
-            "\"id\": 11,\n" +
-            "\"username\": \"Tom99\",\n" +
-            "\"firstName\": \"Tom\",\n" +
-            "\"lastName\": \"Adams\",\n" +
-            "\"email\": \"tomadams1@example.com\",\n" +
-            "\"password\": \"qwerty1\",\n" +
-            "\"phone\": \"999888\",\n" +
-            "\"userStatus\": 0\n" +
-            "}," +
-            "{\n" +
-            "\"id\": 22,\n" +
-            "\"username\": \"Joe2\",\n" +
-            "\"firstName\": \"Joe\",\n" +
-            "\"lastName\": \"Roberts\",\n" +
-            "\"email\": \"joshroberts1@example.com\",\n" +
-            "\"password\": \"qwerty2\",\n" +
-            "\"phone\": \"999777\",\n" +
-            "\"userStatus\": 0\n" +
-            "}]";
+    Request postCreateTheFirstUser = new Request("11","Tom99","Tom", "Adams", "tomadams1@example.com", "qwerty1", "999888", "0");
+    Request postCreateTheSecondUser = new Request("22","Joe2","Joe", "Roberts", "joshroberts1@example.com", "qwerty2", "999777", "0");
 
     @Test()
     @Order(1)
-    public void createTwoUsers() {
+    public void createTheFirstUser() {
 
 
         RestAssured.given()
                 .log().all()
                 .when()
                 .contentType(ContentType.JSON)
-                .body(body)
-                .post(baseUrl+"/user/createWithList")
+                .body(postCreateTheFirstUser)
+                .post(baseUrl+"/user")
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200);
+    }
+
+    @Test()
+    @Order(2)
+    public void createTheSecondUser() {
+
+
+        RestAssured.given()
+                .log().all()
+                .when()
+                .contentType(ContentType.JSON)
+                .body(postCreateTheSecondUser)
+                .post(baseUrl+"/user")
                 .then()
                 .log().all()
                 .assertThat()
@@ -53,7 +53,7 @@ public class MyTest2 {
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     public void getCreatedUser1() {
 
         RestAssured.given()
@@ -69,7 +69,7 @@ public class MyTest2 {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     public void getCreatedUser2() {
 
         RestAssured.given()
@@ -85,7 +85,7 @@ public class MyTest2 {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     public void loginUser1Test() {
         
         String userSession = RestAssured.given()
@@ -102,7 +102,7 @@ public class MyTest2 {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     public void logoutUser1Test() {
 
         RestAssured.given()
@@ -117,7 +117,7 @@ public class MyTest2 {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     public void loginUser2Test() {
 
         RestAssured.given()
@@ -133,7 +133,7 @@ public class MyTest2 {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     public void logoutUser2Test() {
 
         RestAssured.given()
@@ -148,7 +148,7 @@ public class MyTest2 {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     public void deleteCreatedUser1() {
 
         RestAssured.given()
@@ -162,7 +162,7 @@ public class MyTest2 {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     public void deleteCreatedUser2() {
 
         RestAssured.given()

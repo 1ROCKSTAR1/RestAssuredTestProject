@@ -1,6 +1,6 @@
 package API;
 
-import Utils.RandomEmail;
+import utils.RandomEmail;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;

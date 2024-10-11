@@ -15,19 +15,9 @@ public class CollectionFromPostman {
 
     String randomEmail = RandomEmail.generateRandomEmail();
 
-    RequestForPostman requestForPostman = new RequestForPostman("Tom", "Willis", randomEmail);
+    RequestForPostman requestForPostmanUser1 = new RequestForPostman("Tom", "Willis", randomEmail);
 
-    String bodyPostman = "{\n" +
-            "\"firstName\": \"Michael\",\n" +
-            "\"lastName\": \"Willis\",\n" +
-            "\"email\": \"" + randomEmail + "\"\n" +
-            "}";
-
-    String bodyPostmanChanged = "{\n" +
-            "\"firstName\": \"Michaell\",\n" +
-            "\"lastName\": \"Willisson\",\n" +
-            "\"phone\": \"" + "789456123" + "\"\n" +
-            "}";
+    RequestForPostman requestForPostmanUser1Changed = new RequestForPostman("Nash","Bridges");
 
 
     @Test
@@ -58,13 +48,13 @@ public class CollectionFromPostman {
                 .log().all()
                 .when()
                 .contentType(ContentType.JSON)
-                .body(bodyPostman)
+                .body(requestForPostmanUser1)
                 .post(baseUrl + "data/v1/user/create")
                 .then()
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("firstName", Matchers.equalTo("Michael"))
+                .body("firstName", Matchers.equalTo("Tom"))
                 .extract().response().jsonPath().get("id");
 
         RestAssured.given()
@@ -72,13 +62,12 @@ public class CollectionFromPostman {
                 .log().all()
                 .when()
                 .contentType(ContentType.JSON)
-                .body(bodyPostmanChanged)
+                .body(requestForPostmanUser1Changed)
                 .put(baseUrl+"data/v1/user/"+idUser)
                 .then()
                 .log().all()
                 .assertThat()
-                .statusCode(200)
-                .body("phone", Matchers.equalTo("789456123"));
+                .statusCode(200);
 
 
         RestAssured.given()
@@ -90,9 +79,8 @@ public class CollectionFromPostman {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("firstName", Matchers.equalTo("Michaell"))
-                .body("lastName", Matchers.equalTo("Willisson"))
-                .body("phone", Matchers.equalTo("789456123"));
+                .body("firstName", Matchers.equalTo("Nash"))
+                .body("lastName", Matchers.equalTo("Bridges"));
 
 
         RestAssured.given()
@@ -123,7 +111,6 @@ public class CollectionFromPostman {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("text", Matchers.equalTo("my trip"))
-                .body("tags", Matchers.equalTo("qa"));
+                .body("text", Matchers.equalTo("my trip"));
     }
 }

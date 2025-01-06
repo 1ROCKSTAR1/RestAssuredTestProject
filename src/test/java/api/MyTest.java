@@ -1,4 +1,4 @@
-package API;
+package api;
 
 import utils.RandomEmail;
 import io.restassured.RestAssured;

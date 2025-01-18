@@ -64,12 +64,7 @@ public class CryptoApiTest {
         List<TickerData> highToLow = getTickers()
                 .stream()
                 .filter(a->a.getSymbol().endsWith("USDT"))
-                .sorted(new Comparator<TickerData>() {
-                    @Override
-                    public int compare(TickerData o1, TickerData o2) {
-                        return o2.getChangeRate().compareTo(o1.getChangeRate());
-                    }
-                }).toList();
+                .sorted((o1, o2) -> o2.getChangeRate().compareTo(o1.getChangeRate())).toList();
 
         List<TickerData> top10 = highToLow
                 .stream()

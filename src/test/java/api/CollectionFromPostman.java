@@ -25,7 +25,6 @@ public class CollectionFromPostman {
 
         RestAssured.given()
                 .header(apiKey,keyValue)
-                .log().all()
                 .when()
                 .get(baseUrl + "data/v1/user")
                 .then()
@@ -35,7 +34,6 @@ public class CollectionFromPostman {
 
         RestAssured.given()
                 .header(apiKey,keyValue)
-                .log().all()
                 .when()
                 .get(baseUrl + "data/v1/user?page=1&limit=10")
                 .then()
@@ -45,7 +43,6 @@ public class CollectionFromPostman {
 
         String idUser = RestAssured.given()
                 .header(apiKey,keyValue)
-                .log().all()
                 .when()
                 .contentType(ContentType.JSON)
                 .body(requestForPostmanUser1)
@@ -59,7 +56,6 @@ public class CollectionFromPostman {
 
         RestAssured.given()
                 .header(apiKey,keyValue)
-                .log().all()
                 .when()
                 .contentType(ContentType.JSON)
                 .body(requestForPostmanUser1Changed)
@@ -72,7 +68,6 @@ public class CollectionFromPostman {
 
         RestAssured.given()
                 .header(apiKey,keyValue)
-                .log().all()
                 .when()
                 .get(baseUrl+"data/v1/user/"+idUser)
                 .then()
@@ -85,7 +80,6 @@ public class CollectionFromPostman {
 
         RestAssured.given()
                 .header(apiKey,keyValue)
-                .log().all()
                 .when()
                 .contentType(ContentType.JSON)
                 .body("{\n" +
@@ -104,7 +98,6 @@ public class CollectionFromPostman {
 
         RestAssured.given()
                 .header(apiKey,keyValue)
-                .log().all()
                 .when()
                 .get(baseUrl + "user/" + idUser + "/post")
                 .then()

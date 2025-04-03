@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import pojo.Request;
 
+import static org.hamcrest.Matchers.*;
+
 
 @TestMethodOrder (MethodOrderer.OrderAnnotation.class)
 public class MyTest2 {
@@ -22,7 +24,6 @@ public class MyTest2 {
     @Order(1)
     public void createTheFirstUser() {
 
-
         RestAssured.given()
                 .log().all()
                 .when()
@@ -32,13 +33,15 @@ public class MyTest2 {
                 .then()
                 .log().all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .body("message",notNullValue())
+                .and().time(lessThan(1300L));
     }
 
     @Test()
     @Order(2)
     public void createTheSecondUser() {
-
 
         RestAssured.given()
                 .log().all()
@@ -49,7 +52,10 @@ public class MyTest2 {
                 .then()
                 .log().all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .body("message",notNullValue())
+                .and().time(lessThan(1300L));
     }
 
     @Test
@@ -65,7 +71,9 @@ public class MyTest2 {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("id", Matchers.equalTo(11));
+                .contentType("application/json")
+                .body("id", Matchers.equalTo(11))
+                .and().time(lessThan(1300L));
     }
 
     @Test
@@ -81,14 +89,16 @@ public class MyTest2 {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("id", Matchers.equalTo(22));
+                .contentType("application/json")
+                .body("id", Matchers.equalTo(22))
+                .and().time(lessThan(1300L));
     }
 
     @Test
     @Order(5)
     public void loginUser1Test() {
         
-        String userSession = RestAssured.given()
+        RestAssured.given()
                 .auth()
                 .basic("Tom99", "qwerty1")
                 .when()
@@ -97,8 +107,9 @@ public class MyTest2 {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .extract().response().jsonPath().getString("message");
-
+                .contentType("application/json")
+                .body("message", containsString("logged in user session"))
+                .and().time(lessThan(1300L));
     }
 
     @Test
@@ -113,7 +124,10 @@ public class MyTest2 {
                 .then()
                 .log().all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .body("message", equalTo("ok"))
+                .and().time(lessThan(1300L));
     }
 
     @Test
@@ -128,8 +142,10 @@ public class MyTest2 {
                 .then()
                 .log().all()
                 .assertThat()
-                .statusCode(200);
-
+                .statusCode(200)
+                .contentType("application/json")
+                .body("message", containsString("logged in user session"))
+                .and().time(lessThan(1300L));
     }
 
     @Test
@@ -144,7 +160,10 @@ public class MyTest2 {
                 .then()
                 .log().all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .body("message", equalTo("ok"))
+                .and().time(lessThan(1300L));
     }
 
     @Test
@@ -158,7 +177,10 @@ public class MyTest2 {
                 .delete(baseUrl+"/user/Tom99")
                 .then()
                 .log().all()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .body("message", equalTo("Tom99"))
+                .and().time(lessThan(1300L));
     }
 
     @Test
@@ -172,7 +194,9 @@ public class MyTest2 {
                 .delete(baseUrl+"/user/Joe2")
                 .then()
                 .log().all()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .body("message", equalTo("Joe2"))
+                .and().time(lessThan(1300L));
     }
-
 }

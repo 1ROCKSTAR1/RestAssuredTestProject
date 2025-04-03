@@ -1,15 +1,45 @@
 package api;
 
+import org.junit.jupiter.api.Assertions;
 import utils.RandomEmail;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
+import java.util.List;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.lessThan;
 
 public class MyTest {
 
     private static final String baseUrl = "https://dummyapi.io/data/v1";
 
     String randomEmail = RandomEmail.generateRandomEmail();
+
+    private String userId;
+
+    public List<String> getUsers() {
+        return given()
+                .when()
+                .contentType(ContentType.JSON)
+                .header("app-id","63cf9e4bc876657cabc19378")
+                .get(baseUrl + "/user")
+                .then()
+                .log().body()
+                .extract().jsonPath()
+                .getList("data.picture");
+    }
+
+    @Test
+    public void checkTestJpg() {
+
+        List<String> users = getUsers()
+                .stream()
+                .toList();
+
+        Assertions.assertTrue(users
+                .stream()
+                .allMatch(a->a.contains(".jpg")));
+    }
 
     @Test
     public void getAllUsers() {
@@ -22,7 +52,9 @@ public class MyTest {
                 .get(baseUrl+"/user")
                 .then()
                 .log().all()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .and().time(lessThan(1300L));
     }
 
     @Test
@@ -33,7 +65,7 @@ public class MyTest {
                 "\"email\": \"" + randomEmail + "\"\n" +
                 "}";
 
-        RestAssured .given()
+        userId = RestAssured.given()
                 .log().all()
                 .when()
                 .contentType(ContentType.JSON)
@@ -42,7 +74,10 @@ public class MyTest {
                 .post(baseUrl+"/user/create")
                 .then()
                 .log().all()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .and().time(lessThan(1300L))
+                .extract().path("id");
     }
 
 
@@ -60,10 +95,12 @@ public class MyTest {
                 .contentType(ContentType.JSON)
                 .header("app-id","63cf9e4bc876657cabc19378")
                 .body(MicEdit)
-                .put(baseUrl+"/user/63ef943fc89363d27603d0ae")
+                .put(baseUrl+"/user/" + userId)
                 .then()
                 .log().all()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .and().time(lessThan(1300L));
     }
 
     @Test
@@ -72,10 +109,11 @@ public class MyTest {
                 .log().all()
                 .when()
                 .contentType(ContentType.JSON)
-                //.body(update)
-                .delete(baseUrl+"/user/63ef943fc89363d27603d0ae")
+                .delete(baseUrl+"/user/" + userId)
                 .then()
                 .log().all()
-                .statusCode(204);
+                .statusCode(204)
+                .contentType("application/json")
+                .and().time(lessThan(1300L));
     }
 }

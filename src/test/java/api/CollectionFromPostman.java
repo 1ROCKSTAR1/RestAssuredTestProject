@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import pojo.RequestForPostman;
 import utils.RandomEmail;
 
+import static org.hamcrest.Matchers.lessThan;
+
 public class CollectionFromPostman {
 
     final String baseUrl = "https://dummyapi.io/";
@@ -30,7 +32,9 @@ public class CollectionFromPostman {
                 .then()
                 .log().all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .and().time(lessThan(1300L));
 
         RestAssured.given()
                 .header(apiKey,keyValue)
@@ -39,7 +43,9 @@ public class CollectionFromPostman {
                 .then()
                 .log().all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .and().time(lessThan(1300L));
 
         String idUser = RestAssured.given()
                 .header(apiKey,keyValue)
@@ -52,6 +58,8 @@ public class CollectionFromPostman {
                 .assertThat()
                 .statusCode(200)
                 .body("firstName", Matchers.equalTo("Tom"))
+                .contentType("application/json")
+                .and().time(lessThan(1300L))
                 .extract().response().jsonPath().get("id");
 
         RestAssured.given()
@@ -63,7 +71,9 @@ public class CollectionFromPostman {
                 .then()
                 .log().all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .and().time(lessThan(1300L));
 
 
         RestAssured.given()
@@ -74,8 +84,10 @@ public class CollectionFromPostman {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
+                .contentType("application/json")
                 .body("firstName", Matchers.equalTo("Nash"))
-                .body("lastName", Matchers.equalTo("Bridges"));
+                .body("lastName", Matchers.equalTo("Bridges"))
+                .and().time(lessThan(1300L));
 
 
         RestAssured.given()
@@ -93,7 +105,9 @@ public class CollectionFromPostman {
                 .then()
                 .log().all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .contentType("application/json")
+                .and().time(lessThan(1300L));
 
 
         RestAssured.given()
@@ -104,6 +118,8 @@ public class CollectionFromPostman {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("text", Matchers.equalTo("my trip"));
+                .contentType("application/json")
+                .body("text", Matchers.equalTo("my trip"))
+                .and().time(lessThan(1300L));
     }
 }

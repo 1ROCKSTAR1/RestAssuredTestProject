@@ -5,7 +5,7 @@
 ![Java](https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/java.png)
 ![Maven](https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/maven.png)
 ![REST Assured](https://img.shields.io/badge/REST%20Assured-00A4DC?style=for-the-badge&logo=rest&logoColor=white)
-![JUnit5](https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=junit5&logoColor=white)
+![JUnit](https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/junit.png)
 ![Allure](https://img.shields.io/badge/Allure-FF6A33?style=for-the-badge&logo=allure&logoColor=white)
 ![Lombok](https://img.shields.io/badge/Lombok-A50034?style=for-the-badge&logo=lombok&logoColor=white)
 

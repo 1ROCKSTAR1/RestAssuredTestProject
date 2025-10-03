@@ -1,4 +1,4 @@
-# 🚗 Californication Sauce Project
+# 🚗 Rest Assured Test Project
 
 <div align="center">
 

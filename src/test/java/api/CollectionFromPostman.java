@@ -14,19 +14,20 @@ public class CollectionFromPostman {
     final String baseUrl = "https://dummyapi.io/";
     final String apiKey = "app-id";
     final String keyValue = "62e6f10d11c051e2d93a6723";
+    final String keyValue2 = "63cf9e4bc876657cabc19378";
 
     String randomEmail = RandomEmail.generateRandomEmail();
 
     RequestForPostman requestForPostmanUser1 = new RequestForPostman("Tom", "Willis", randomEmail);
 
-    RequestForPostman requestForPostmanUser1Changed = new RequestForPostman("Nash","Bridges");
+    RequestForPostman requestForPostmanUser1Changed = new RequestForPostman("Nash","Bridges", "blabla@ya.ru");
 
 
     @Test
     public void postmanTest() {
 
         RestAssured.given()
-                .header(apiKey,keyValue)
+                .header(apiKey,keyValue2)
                 .when()
                 .get(baseUrl + "data/v1/user")
                 .then()
@@ -37,7 +38,7 @@ public class CollectionFromPostman {
                 .and().time(lessThan(1300L));
 
         RestAssured.given()
-                .header(apiKey,keyValue)
+                .header(apiKey,keyValue2)
                 .when()
                 .get(baseUrl + "data/v1/user?page=1&limit=10")
                 .then()
@@ -48,7 +49,7 @@ public class CollectionFromPostman {
                 .and().time(lessThan(1300L));
 
         String idUser = RestAssured.given()
-                .header(apiKey,keyValue)
+                .header(apiKey,keyValue2)
                 .when()
                 .contentType(ContentType.JSON)
                 .body(requestForPostmanUser1)
@@ -63,10 +64,15 @@ public class CollectionFromPostman {
                 .extract().response().jsonPath().get("id");
 
         RestAssured.given()
-                .header(apiKey,keyValue)
+                .header(apiKey,keyValue2)
                 .when()
                 .contentType(ContentType.JSON)
-                .body(requestForPostmanUser1Changed)
+                .body("""
+                        {
+                        "firstName": "Nashhh",
+                        "lastName": "Bridges",
+                        "phone": "20",
+                        }""")
                 .put(baseUrl+"data/v1/user/"+idUser)
                 .then()
                 .log().all()
@@ -77,7 +83,7 @@ public class CollectionFromPostman {
 
 
         RestAssured.given()
-                .header(apiKey,keyValue)
+                .header(apiKey,keyValue2)
                 .when()
                 .get(baseUrl+"data/v1/user/"+idUser)
                 .then()
@@ -91,7 +97,7 @@ public class CollectionFromPostman {
 
 
         RestAssured.given()
-                .header(apiKey,keyValue)
+                .header(apiKey,keyValue2)
                 .when()
                 .contentType(ContentType.JSON)
                 .body("{\n" +
@@ -111,7 +117,7 @@ public class CollectionFromPostman {
 
 
         RestAssured.given()
-                .header(apiKey,keyValue)
+                .header(apiKey,keyValue2)
                 .when()
                 .get(baseUrl + "user/" + idUser + "/post")
                 .then()

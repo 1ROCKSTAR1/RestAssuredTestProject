@@ -35,3 +35,48 @@
 ![Lombok](https://img.shields.io/badge/Lombok-1.18-A50034?style=flat-square&logo=lombok&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)
+
+
+
+    AstriTest/                          # Основной проект
+    ├── 📁 src/
+    │      └── 📁 java/
+    │          ├── 📁 api/       # Базовые тестовые классы
+    │          │   ├── 📄 AastriTest.java
+    │          │   ├── 📄 BaseTest.java
+    │          │   ├── 📄 CollectionFromPostman.java
+    │          │   ├── 📄 DummyApiSimpleTest.java
+    │          │   ├── 📄 ImproveAastriTests.java
+    │          │   ├── 📄 PetStoreCollectionTest.java
+    │          │   ├── 📄 PetStoreTest.java
+    │          │   └── 📄 RegresTest.java
+    │          │
+    │          ├── 📁 helpers/        # Вспомогательные классы
+    │          │   ├── 📄 AastriApi.java
+    │          │   └── 📄 Data.java
+    │          │
+    │          ├── 📁 pojo/            # Page Object / Models (POJO)
+    │          │   ├── 📄 ChangeRequestAastri.java
+    │          │   ├── 📄 CreateRequestAastri.java
+    │          │   ├── 📄 ListDataResponse.java
+    │          │   ├── 📄 ProductDataResponse.java
+    │          │   ├── 📄 RegRequest.java
+    │          │   ├── 📄 Request.java
+    │          │   ├── 📄 RequestForPostman.java
+    │          │   ├── 📄 SuccessRegResponse.java
+    │          │   └── 📄 UserDataResponse.java
+    │          │
+    │          ├── 📁 streamApi/      # API тесты для потоковых данных
+    │          │   ├── 📄 CryptoApiTest.java
+    │          │   ├── 📄 TickerComparatorFromHighToLow.java
+    │          │   ├── 📄 TickerComparatorFromLowToHigh.java
+    │          │   ├── 📄 TickerData.java
+    │          │   └── 📄 TickerShort.java
+    │          │
+    │          └── 📁 utils/           # Утилиты 
+    │              └── 📄 RandomEmail.java
+    │   
+    │
+    ├── 📄 .gitignore          # Игнорируемые файлы
+    ├── 📄 pom.xml             # Maven конфигурация 
+    └── 📄 README.md           # Документация проекта 

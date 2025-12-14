@@ -63,7 +63,7 @@ public class AastriTest {
     @Test
     public void getOneByIdTest() {
 
-        int id = 1;
+        String id = "1";
 
         RestAssured.given()
                 .when()
@@ -77,11 +77,46 @@ public class AastriTest {
     }
 
     @Test
-    public void createAndChangeOneTest() {
-        // Создание
+    public void putOneByIdTest() {
+
+        String id = "402";
+
+        ChangeRequestAastri requestChange = new ChangeRequestAastri(id,fruit2,randomNumber2);
+
+        RestAssured
+                .given()
+                .log().all()
+                .contentType(ContentType.JSON)
+                .body(requestChange)
+                .when()
+                .put(baseUrl + "/product/" + id)
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200);
+    }
+
+    @Test
+    public void deleteOneById() {
+
+        String productId = "378";
+
+        RestAssured
+                .given()
+                .when()
+                .delete(baseUrl + "/product/" + productId)
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200);
+    }
+
+    @Test
+    public void createChangeAndDeleteOneTest() {
+
         String productId = RestAssured
                 .given()
-                .log().all() // ← добавить логирование запроса
+                .log().all()
                 .contentType(ContentType.JSON)
                 .body(request)
                 .when()
@@ -94,12 +129,11 @@ public class AastriTest {
 
         System.out.println("Created product ID: " + productId);
 
-        ChangeRequestAastri requestChange = new ChangeRequestAastri(Integer.parseInt(productId),fruit2,randomNumber2);
+        ChangeRequestAastri requestChange = new ChangeRequestAastri(productId,fruit2,randomNumber2);
 
-        // Обновление
         RestAssured
                 .given()
-                .log().all() // ← добавить логирование запроса
+                .log().all()
                 .contentType(ContentType.JSON)
                 .body(requestChange)
                 .when()
@@ -108,11 +142,10 @@ public class AastriTest {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("id", equalTo(Integer.parseInt(productId))) // ← проверяем тот же ID
+                .body("id", equalTo(Integer.parseInt(productId)))
                 .body("name", equalTo(fruit2))
                 .body("amount", equalTo(randomNumber2));
 
-        // Удаление
         RestAssured
                 .given()
                 .when()

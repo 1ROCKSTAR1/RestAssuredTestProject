@@ -1,5 +1,6 @@
 package api;
 
+import io.restassured.http.Header;
 import org.junit.jupiter.api.Assertions;
 import utils.RandomEmail;
 import io.restassured.RestAssured;
@@ -9,11 +10,13 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.lessThan;
 
-public class MyTest {
+public class DummyApiSimpleTest {
 
     private static final String baseUrl = "https://dummyapi.io/data/v1";
 
     String randomEmail = RandomEmail.generateRandomEmail();
+
+    Header header = new Header("app-id", "63cf9e4bc876657cabc19378");
 
     private String userId;
 
@@ -21,7 +24,7 @@ public class MyTest {
         return given()
                 .when()
                 .contentType(ContentType.JSON)
-                .header("app-id","63cf9e4bc876657cabc19378")
+                .header(header)
                 .get(baseUrl + "/user")
                 .then()
                 .log().body()
@@ -48,7 +51,7 @@ public class MyTest {
                 .log().all()
                 .when()
                 .contentType(ContentType.JSON)
-                .header("app-id","63cf9e4bc876657cabc19378")
+                .header(header)
                 .get(baseUrl+"/user")
                 .then()
                 .log().all()
@@ -59,17 +62,13 @@ public class MyTest {
 
     @Test
     public void createUser() {
-        String Mic = "{\n" +
-                "\"firstName\": \"Michael\",\n" +
-                "\"lastName\": \"Willis\",\n" +
-                "\"email\": \"" + randomEmail + "\"\n" +
-                "}";
+        String Mic = "{\"firstName\": \"Michael\", \"lastName\": \"Willis\", \"email\": \"" + randomEmail + "\"}";
 
         userId = RestAssured.given()
                 .log().all()
                 .when()
                 .contentType(ContentType.JSON)
-                .header("app-id","63cf9e4bc876657cabc19378")
+                .header(header)
                 .body(Mic)
                 .post(baseUrl+"/user/create")
                 .then()
@@ -83,17 +82,13 @@ public class MyTest {
 
     @Test
     public void editUser() {
-        String MicEdit = "{\n" +
-                "\"firstName\": \"MichaellChanged\",\n" +
-                "\"lastName\": \"WillisChanged\",\n" +
-                "\"email\": \"" + randomEmail + "\"\n" +
-                "}";
+        String MicEdit = "{\"firstName\": \"MichaellChanged\", \"lastName\": \"WillisChanged\", \"email\": \"" + randomEmail + "\"}";
 
         RestAssured .given()
                 .log().all()
                 .when()
                 .contentType(ContentType.JSON)
-                .header("app-id","63cf9e4bc876657cabc19378")
+                .header(header)
                 .body(MicEdit)
                 .put(baseUrl+"/user/" + userId)
                 .then()

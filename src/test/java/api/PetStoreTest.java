@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.*;
 
 
 @TestMethodOrder (MethodOrderer.OrderAnnotation.class)
-public class MyTest2 {
+public class PetStoreTest {
 
     private static final String baseUrl = "https://petstore.swagger.io/v2";
 

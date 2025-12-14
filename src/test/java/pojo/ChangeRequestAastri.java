@@ -9,11 +9,11 @@ import lombok.Setter;
     @NoArgsConstructor
     public class ChangeRequestAastri {
 
-        private Integer id;
+        private String id;
         private String name;
         private Integer amount;
 
-        public ChangeRequestAastri(Integer id,String name, Integer amount) {
+        public ChangeRequestAastri(String id,String name, Integer amount) {
             this.id = id;
             this.name = name;
             this.amount = amount;

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import pojo.Request;
 
 
-public class MyTest3 {
+public class PetStoreCollectionTest {
 
     private static final String baseUrl = "https://petstore.swagger.io/v2";
 

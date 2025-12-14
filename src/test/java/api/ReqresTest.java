@@ -2,6 +2,7 @@ package api;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.http.Header;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pojo.ListDataResponse;
@@ -13,14 +14,17 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public class MyTest4 {
+public class ReqresTest {
 
     private final static String BASE_URL = "https://reqres.in";
+
+    Header header = new Header("x-api-key", "reqres_8b586696dd19457e8900cb0fe6050d2e");
 
     @Test
     public void checkAvatarAndIdTest() {
 
         List<UserDataResponse> users = given()
+                .header(header)
                 .when()
                 .contentType(ContentType.JSON)
                 .get(BASE_URL + "/api/users?page=2")
@@ -44,6 +48,7 @@ public class MyTest4 {
         RegRequest user = new RegRequest("eve.holt@reqres.in","pistol");
 
         SuccessRegResponse succesReg = given()
+                .header(header)
                 .when()
                 .contentType(ContentType.JSON)
                 .body(user)
@@ -63,6 +68,7 @@ public class MyTest4 {
         RegRequest userWithoutPassword = new RegRequest("eve.holt@reqres.in", "");
 
         RestAssured.given()
+                .header(header)
                 .when()
                 .contentType(ContentType.JSON)
                 .body(userWithoutPassword)
@@ -77,6 +83,7 @@ public class MyTest4 {
     public void sortedYearsTest() {
 
         List<ListDataResponse> ourList = given()
+                .header(header)
                 .when()
                 .contentType(ContentType.JSON)
                 .get(BASE_URL + "/api/unknown")
@@ -102,6 +109,7 @@ public class MyTest4 {
     public void deleteUserTest() {
 
         RestAssured.given()
+                .header(header)
                 .when()
                 .contentType(ContentType.JSON)
                 .delete(BASE_URL + "/api/users/2")
